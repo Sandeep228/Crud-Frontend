@@ -57,7 +57,7 @@ const Form: React.FC = () => {
           title: 'Data Submitted',
           description: 'Your data has been successfully submitted.',
           status: 'success',
-          duration: 5000,
+          duration: 2000,
           isClosable: true,
         });
         reset(); 
@@ -66,7 +66,7 @@ const Form: React.FC = () => {
           title: 'Error',
           description: 'Failed to submit data. Please try again.',
           status: 'error',
-          duration: 5000,
+          duration: 2000,
           isClosable: true,
         });
       }
@@ -76,7 +76,7 @@ const Form: React.FC = () => {
         title: 'Error',
         description: 'An error occurred. Please try again later.',
         status: 'error',
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }

@@ -19,7 +19,8 @@ import {
   Input,
   Textarea,
   Box,
-  Card
+  Card,
+  useToast
 } from '@chakra-ui/react';
 
 interface RowData {
@@ -37,6 +38,8 @@ const TableList: React.FC= () => {
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [editMode, setEditMode] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
+
 
   const initialFormData = {
     name: '',
@@ -82,11 +85,35 @@ const TableList: React.FC= () => {
         const newData = data.filter((row) => row._id !== id);
         setData(newData);
         setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+
+        toast({
+          title: 'Item Deleted',
+          description: 'The item was deleted successfully.',
+          status: 'success',
+          duration: 2000, 
+          isClosable: true,
+        });
       } else {
         console.error('Failed to delete item');
+
+        toast({
+          title: 'Error',
+          description: 'Failed to delete item. Please try again.',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred. Please try again.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -122,11 +149,35 @@ const TableList: React.FC= () => {
         setData(newData);
         setEditMode(null);
         onClose();
+
+        toast({
+          title: 'Item Updated',
+          description: 'The item was updated successfully.',
+          status: 'success',
+          duration: 5000, 
+          isClosable: true,
+        });
       } else {
         console.error('Failed to update item');
+
+        toast({
+          title: 'Error',
+          description: 'Failed to update item. Please try again.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -142,15 +193,37 @@ const TableList: React.FC= () => {
         }),
       });
   
-      const responseData = await response.json(); // Parse the JSON response
+      const responseData = await response.json();
   
       if (response.ok) {
-        console.log('Email sent successfully', responseData);
+          toast({
+          title: 'Email Sent',
+          description: 'The email was sent successfully.',
+          status: 'success',
+          duration: 2000, 
+          isClosable: true,
+        });
       } else {
         console.error('Failed to send email', responseData);
+  
+        toast({
+          title: 'Error',
+          description: 'Failed to send email. Please try again.',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+  
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred. Please try again.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -177,7 +250,17 @@ const TableList: React.FC= () => {
               <Th>Email</Th>
               <Th>Hobbies</Th>
               <Th>Update/Delete</Th>
-              <Th>Send a Mail</Th>
+              <Th>Send a Mail 
+              <Button
+                    colorScheme="green"
+                    size="sm"
+                    ml={2}
+                    onClick={() => sendEmail()}
+                  >
+                    Send
+                  </Button>
+              </Th>
+             
             </Tr>
           </Thead>
           <Tbody>
@@ -209,16 +292,6 @@ const TableList: React.FC= () => {
                     onClick={() => handleDelete(row._id)}
                   >
                     Delete
-                  </Button>
-                </Td>
-                <Td>
-                  <Button
-                    colorScheme="green"
-                    size="sm"
-                    ml={2}
-                    onClick={() => sendEmail}
-                  >
-                    Send
                   </Button>
                 </Td>
               </Tr>
