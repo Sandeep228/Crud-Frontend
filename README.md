@@ -7,7 +7,7 @@
 [https://github.com/Sandeep228/Crud-Backend/tree/main#endpoints-documentation]
 
 ## Demo
-
+(https://crudfrontend.netlify.app/)
 
 
 ## Deployment
