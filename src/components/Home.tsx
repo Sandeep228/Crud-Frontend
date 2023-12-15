@@ -35,16 +35,29 @@ const Home: React.FC = () => {
         <Box px="24px" py="16px" marginLeft="80px" marginRight="80px">
           <HStack
             display="flex"
-            justifyContent="space-between"
+            justifyContent={{ base: "center", md: "space-between" }}
             position="sticky"
           >
             <Box display="flex" alignItems="center">
               <Icon as={PiUserSwitchFill} h={6} w={6} color="white" mr="8px" />
-              <Text as="b" fontSize="3xl" color="white">
+              <Text
+                as="b"
+                sx={{
+                  base: {
+                    fontSize: "2xl",
+                    textAlign: "center",
+                  },
+                  md: {
+                    fontSize: "3xl",
+                    textAlign: "left",
+                  },
+                }}
+                color="white"
+              >
                 User Data
               </Text>
             </Box>
-            <Box display="flex" alignItems="center">
+            <Box display={{ base: "none", md: "flex" }} alignItems="center">
               <Button
                 mr="23px"
                 onClick={() => navigate("/form")}
@@ -79,10 +92,9 @@ const Home: React.FC = () => {
             borderRadius="10px"
             transition="all 0.2s cubic-bezier(.4,0,.2,1)"
             _hover={{ transform: 'scale(1.2)' }}
-         
             onClick={() => navigate("/table")}
           >
-            <span> <FaUsers fontSize="2.3rem" color="white" /> </span>
+            <span> <FaUsers fontSize={{ base: "1.8rem", md: "2.3rem" }as any} color="white" /> </span>
           </Button>
           <Button
             className="big-btn"
@@ -97,9 +109,8 @@ const Home: React.FC = () => {
             transition="all 0.2s cubic-bezier(.4,0,.2,1)"
             _hover={{ transform: 'scale(1.2)' }}
             onClick={() => navigate("/form")}
-         
           >
-            <span> <FaUserPlus fontSize="2.3rem" color="white" /> </span>
+            <span> <FaUserPlus fontSize={{ base: "1.8rem", md: "2.3rem" } as any} color="white" /> </span>
           </Button>
         </Box>
       </Center>

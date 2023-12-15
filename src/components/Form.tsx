@@ -86,10 +86,21 @@ const Form: React.FC = () => {
     window.history.back();
   };
 
+  const validateEmail = (value:string) => {
+    if (!value.endsWith('gmail.com')) {
+      return 'Email must be a Gmail address';
+    }
+    return true; 
+  };
+
   return (
-    <Box bg="black" p={4} h="100%">
+    <Box bg="black" p={4} h="100%" >
       <Flex p={45}>
-        <Box w="30%" p={35} bg="#131313" borderRadius=" 35px 0  0 35px">
+        <Box w="30%" p={35} bg="#131313" borderRadius=" 35px 0  0 35px" sx={{
+          '@media screen and (max-width: 600px)': {
+           display:"none"
+          },
+        }}>
           <Box mt={200}>
             <Heading size="xl" ml={30} mb={2} color="white">
               <Icon
@@ -102,16 +113,21 @@ const Form: React.FC = () => {
               />
               User Data
             </Heading>
-            <Text color="white" ml={63} fontSize={23}>
-              Capturing Thoughts, <br />
-              Creating Possibilities
-            </Text>
           </Box>
         </Box>
-        <Flex direction="column" w="70%" p={4} bg="#242424" color="white">
+        <Flex direction="column" w="70%" p={4} bg="#242424" color="white" sx={{
+            '@media screen and (max-width: 600px)': {
+             width:"100%"
+             },
+        }}>
           <Stack spacing={4}>
-            <Box pl={100}>
-              <Box p={4}>
+            <Box    sx={{
+                paddingLeft: "100px",
+                '@media screen and (max-width: 600px)': {
+                  paddingLeft: "0px", // Adjust this value as needed
+                },
+  }} >
+              <Box p={4}  >
                 <Heading color="white" pb={4}>
                   Craft your User Details
                 </Heading>
@@ -123,7 +139,7 @@ const Form: React.FC = () => {
                       {...register('name', { 
                         required: 'Name is required',
                         pattern: {
-                          value: /^[A-Za-z]+$/, 
+                          value: /^[A-Za-z\s]+$/, 
                           message: 'Name should not contain numeric characters',
                         }, 
                       })}
@@ -152,7 +168,9 @@ const Form: React.FC = () => {
                     <FormLabel>Email</FormLabel>
                     <Input
                       type="email"
-                      {...register('email', { required: 'Email is required' })}
+                      {...register('email', { required: 'Email is required',
+                      validate: validateEmail, })}
+                      
                     />
                     <span style={{ color: 'red' }}>{errors.email && errors.email.message}</span>
                   </FormControl>

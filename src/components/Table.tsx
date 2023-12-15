@@ -230,6 +230,8 @@ const TableList: React.FC= () => {
   return (
     <Box
       display="flex"
+      flexDirection="column"
+
       alignItems="center"
       height="100vh"
       bgGradient="linear(to-l, #7928CA, #FF0080)" 
@@ -238,66 +240,60 @@ const TableList: React.FC= () => {
     >
       <Card
         width="100%" 
+        flex="1" 
+        overflowX="auto"
         p={5} 
       >
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Check</Th>
-              <Th>ID</Th>
-              <Th>Name</Th>
-              <Th>Phone Number</Th>
-              <Th>Email</Th>
-              <Th>Hobbies</Th>
-              <Th>Update/Delete</Th>
-              <Th>Send a Mail 
-              <Button
-                    colorScheme="green"
-                    size="sm"
-                    ml={2}
-                    onClick={() => sendEmail()}
-                  >
-                    Send
-                  </Button>
-              </Th>
-             
+         <Table variant="simple" style={{ width: '100%', borderCollapse: 'collapse' }} >
+        <Thead   > 
+          <Tr   
+          
+          
+          >
+            <Th>Check</Th>
+            <Th>ID</Th>
+            <Th>Name</Th>
+            <Th>Phone Number</Th>
+            <Th>Email</Th>
+            <Th>Hobbies</Th>
+            <Th>Update/Delete</Th>
+            <Th>
+              Send a Mail
+              <Button colorScheme="green" size="sm" ml={2} onClick={() => sendEmail()}>
+                Send
+              </Button>
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody  >
+          {data?.map((row) => (
+            <Tr key={row._id} 
+        
+           
+          >
+              <Td>
+                <Checkbox
+                  isChecked={selectedRows.includes(row._id)}
+                  onChange={() => handleCheckboxChange(row._id)}
+                />
+              </Td>
+              <Td>{row._id}</Td>
+              <Td>{row.name}</Td>
+              <Td>{row.phoneNumber}</Td>
+              <Td>{row.email}</Td>
+              <Td>{row.hobbies}</Td>
+              <Td>
+                <Button colorScheme="blue" size="sm" onClick={() => handleUpdate(row._id)}>
+                  Update
+                </Button>
+                <Button colorScheme="red" size="sm" ml={2} onClick={() => handleDelete(row._id)}>
+                  Delete
+                </Button>
+              </Td>
             </Tr>
-          </Thead>
-          <Tbody>
-            {data?.map((row) => (
-              <Tr key={row._id}>
-                <Td>
-                  <Checkbox
-                    isChecked={selectedRows.includes(row._id)}
-                    onChange={() => handleCheckboxChange(row._id)}
-                  />
-                </Td>
-                <Td>{row._id}</Td>
-                <Td>{row.name}</Td>
-                <Td>{row.phoneNumber}</Td>
-                <Td>{row.email}</Td>
-                <Td>{row.hobbies}</Td>
-                <Td>
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={() => handleUpdate(row._id)}
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    ml={2}
-                    onClick={() => handleDelete(row._id)}
-                  >
-                    Delete
-                  </Button>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+          ))}
+        </Tbody>
+      </Table>
       </Card>
 
       {/* Modal for editing */}
