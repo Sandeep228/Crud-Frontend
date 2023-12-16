@@ -231,7 +231,6 @@ const TableList: React.FC= () => {
     <Box
       display="flex"
       flexDirection="column"
-
       alignItems="center"
       height="100vh"
       bgGradient="linear(to-l, #7928CA, #FF0080)" 
@@ -245,20 +244,20 @@ const TableList: React.FC= () => {
         p={5} 
       >
          <Table variant="simple" style={{ width: '100%', borderCollapse: 'collapse' }} >
-        <Thead   > 
+        <Thead   style={{backgroundColor:"black", }}> 
           <Tr   
           
-          
           >
-            <Th>Check</Th>
-            <Th>ID</Th>
-            <Th>Name</Th>
-            <Th>Phone Number</Th>
-            <Th>Email</Th>
-            <Th>Hobbies</Th>
-            <Th>Update/Delete</Th>
-            <Th>
-              Send a Mail
+            <Th style={{ color: "white" }}>Check</Th>
+            <Th style={{ color: "white" }}>ID</Th>
+            <Th style={{ color: "white" }}>Name</Th>
+            <Th style={{ color: "white" }}>Phone Number</Th>
+            <Th style={{ color: "white" }}>Email</Th>
+            <Th style={{ color: "white" }}>Hobbies</Th>
+            <Th style={{ color: "white" }}>Update</Th>
+            <Th style={{ color: "white" }}>Delete</Th>
+            <Th style={{ color: "white" }}> 
+              Send a Mail<br/>
               <Button colorScheme="green" size="sm" ml={2} onClick={() => sendEmail()}>
                 Send
               </Button>
@@ -266,10 +265,9 @@ const TableList: React.FC= () => {
           </Tr>
         </Thead>
         <Tbody  >
-          {data?.map((row) => (
+          {data?.map((row,index) => (
             <Tr key={row._id} 
-        
-           
+            className={index % 2 === 0 ? 'even-row' : 'odd-row'}         
           >
               <Td>
                 <Checkbox
@@ -286,6 +284,8 @@ const TableList: React.FC= () => {
                 <Button colorScheme="blue" size="sm" onClick={() => handleUpdate(row._id)}>
                   Update
                 </Button>
+                </Td>
+                <Td>
                 <Button colorScheme="red" size="sm" ml={2} onClick={() => handleDelete(row._id)}>
                   Delete
                 </Button>

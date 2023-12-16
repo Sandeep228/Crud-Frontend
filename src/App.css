@@ -59,6 +59,13 @@ body{
 
 
 
+.even-row {
+  background-color: orange; /* or any other color */
+}
+
+.odd-row {
+  background-color: yellow; /* or any other color */
+}
 
 
 

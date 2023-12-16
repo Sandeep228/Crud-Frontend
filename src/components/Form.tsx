@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Box,
@@ -9,7 +9,6 @@ import {
   Button,
   Flex,
   Stack,
-  Text,
   Icon,
   Heading,
   useToast,
@@ -33,8 +32,17 @@ const Form: React.FC = () => {
 
   const toast = useToast(); 
 
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+
+
   const onSubmit = async (data: FormData) => {
     console.log('Form data submitted:', data);
+
+    if (isSubmitting) {
+      return; // Prevent multiple submissions
+    }
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('https://crud-lvlf.onrender.com/items', {
@@ -79,6 +87,9 @@ const Form: React.FC = () => {
         duration: 2000,
         isClosable: true,
       });
+    }
+    finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -179,6 +190,10 @@ const Form: React.FC = () => {
                     <FormLabel>Hobbies</FormLabel>
                     <Textarea {...register('hobbies' ,{
                         required: 'hobbies is required',
+                        pattern: {
+                          value: /^[A-Za-z\s]+$/, 
+                          message: 'Hobbies should not contain numeric characters',
+                        }, 
                       })} />
                     <span style={{ color: 'red' }}>{errors.hobbies && errors.hobbies.message}</span>
                   </FormControl>
@@ -187,11 +202,13 @@ const Form: React.FC = () => {
                     bg="white"
                     mr={3}
                     onClick={handleGoBack}
+                    
                   >
                     Back
                   </Button>
-                  <Button type="submit" colorScheme="teal">
-                    Submit
+                  <Button type="submit" colorScheme="teal" 
+                   isLoading={isSubmitting}>
+                     {isSubmitting ? 'Submitting...' : 'Submit'}
                   </Button>
                 </form>
               </Box>
